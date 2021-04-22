@@ -25,7 +25,7 @@ names(london_crime)[2] <- "Borough"
 names(london_crime)[3] <- "MajorCategory" 
 names(london_crime)[4] <- "SubCategory" 
 names(london_crime)[5] <- "Value" 
-names(london_crime)[8] <- "CrimeDate" 
+names(london_crime)[7] <- "CrimeDate" 
 
 names(london_crime)
 
@@ -122,7 +122,8 @@ london_crime$Region[london_crime$Borough == 'Westminster'] <- 'Central'
 
 
 london_crime$Region[is.na(london_crime$Region)] <- 'Central'
-
+london_crime$Region[london_crime$Borough == 'City of London'] <- 'Central'
+london_crime[is.na(london_crime$Region),]
 # 7
 # Display which region in London has the highest recorded crime rate
 # show the number of reported crimes by region.
@@ -158,9 +159,22 @@ highest_crime_data
 lowest_crime_data <- subset(london_crime, Region == "South")
 lowest_crime_data
 
+summary(factor(highest_crime_data$MajorCategory))
+
+summary(factor(lowest_crime_data$MajorCategory))
+
 # 9
 # plot the content of both of your data
 #frames side by side
+summary_highcrimes <- summary(highest_crime_data$MajorCategory)             
+summary_lowcrimes <- summary(lowest_crime_data$MajorCategory)               
+
+combined_dataset <- cbind(summary_highcrimes, summary_lowcrimes)        
+
+barplot(combined_dataset, beside=T)                                             
+title(xlab = "Central Region vs South Region")
+title(ylab = "Crime Count")
+
 
 
 #10
